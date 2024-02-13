@@ -6,7 +6,8 @@ function Weather({ destination, fetchWeatherTrigger }) {
   useEffect(() => {
     const fetchWeather = () => {
       if (destination) {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${destination}&appid=f70f247381c3748de5f2cc2790164a40&units=metric&lang=de`)
+        // Hinweis: Passen Sie die URL ggf. an die URL Ihres Servers an.
+        fetch(`http://localhost:3001/weather?destination=${encodeURIComponent(destination)}`)
           .then((response) => response.json())
           .then((data) => {
             if (data && data.main && data.weather) {

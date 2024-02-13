@@ -17,8 +17,26 @@ app.get('/weather', async (req, res) => {
 
 app.get('/attractions', async (req, res) => {
   const { destination } = req.query;
-  // Implementieren Sie die Logik zur Abfrage von Sehenswürdigkeiten basierend auf der gewählten API
+  try {
+    const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${destination}&apikey=lAFS1OGPeG4Mk5hBKTnrAJAlPkNJFAQ3`);
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching attractions data' });
+  }
 });
+
+
+app.get('/attraction-details/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/attractions/${id}.json?apikey=lAFS1OGPeG4Mk5hBKTnrAJAlPkNJFAQ3`);
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching attraction details' });
+  }
+});
+
+
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

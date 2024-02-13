@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Weather from './components/Weather';
-/* import Attractions from './components/Attractions.js'; */
+import Attractions from './components/Attractions.js';
 
 function App() {
   const [destination, setDestination] = useState('');
   const [fetchWeatherTrigger, setFetchWeatherTrigger] = useState(false);
-
+  
   const handleFetchWeather = () => {
     setFetchWeatherTrigger(!fetchWeatherTrigger);
   };
@@ -22,13 +22,22 @@ function App() {
         />
         <button
           onClick={handleFetchWeather}
-          className="btn btn-primary mb-4"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Wetter abrufen
         </button>
         <Weather destination={destination} fetchWeatherTrigger={fetchWeatherTrigger} />
-        {/* <Attractions destination={destination} /> */}
+        <Attractions destination={destination} />
       </div>
+
+
+
+
+
+
+
+
+
     </div>
   );
 }
