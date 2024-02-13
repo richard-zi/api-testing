@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Weather from './components/Weather';
+import Events from './components/Events';
 
 function App() {
   const [destination, setDestination] = useState('');
@@ -26,6 +27,7 @@ function App() {
           Wetter abrufen
         </button>
         <Weather destination={destination} fetchWeatherTrigger={fetchWeatherTrigger} />
+        <Events destination={destination} />
       </div>
     </div>
   );
