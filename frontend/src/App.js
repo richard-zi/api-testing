@@ -4,10 +4,10 @@ import Events from './components/Events';
 
 function App() {
   const [destination, setDestination] = useState('');
-  const [fetchWeatherTrigger, setFetchWeatherTrigger] = useState(false);
+  const [fetchTriggerCounter, setFetchTriggerCounter] = useState(0);
   
   const handleFetchWeather = () => {
-    setFetchWeatherTrigger(!fetchWeatherTrigger);
+    setFetchTriggerCounter(prevCounter => prevCounter + 1);
   };
 
   return (
@@ -26,8 +26,8 @@ function App() {
         >
           Wetter abrufen
         </button>
-        <Weather destination={destination} fetchWeatherTrigger={fetchWeatherTrigger} />
-        <Events destination={destination} />
+        <Weather destination={destination} fetchWeatherTrigger={fetchTriggerCounter} />
+        <Events destination={destination} fetchEventsTrigger={fetchTriggerCounter} />
       </div>
     </div>
   );

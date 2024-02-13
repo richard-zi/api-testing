@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function Events({ destination }) {
-  const [events, setEvents] = useState([]);
-
-  useEffect(() => {
-    if (destination) {
-      fetchEvents();
-    }
-  }, [destination]);
+function Events({ destination, fetchEventsTrigger }) {
+    const [events, setEvents] = useState([]);
+  
+    useEffect(() => {
+      // Führen Sie den Fetch nur aus, wenn destination gesetzt ist
+      if (destination) {
+        fetchEvents();
+      }
+    }, [fetchEventsTrigger]);
 
   const fetchEvents = async () => {
     try {
