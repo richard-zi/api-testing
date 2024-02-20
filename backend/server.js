@@ -15,15 +15,7 @@ app.get('/weather', async (req, res) => {
   }
 });
 
-app.get('/events', async (req, res) => {
-  const { destination } = req.query;
-  try {
-    const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=lAFS1OGPeG4Mk5hBKTnrAJAlPkNJFAQ3&city=${destination}&size=20`);
-    res.json(response.data);
-  } catch (error) {
-    res.status(500).json({ message: 'Fehler beim Abrufen der Event-Daten' });
-  }
-});
+
 
 
 const PORT = process.env.PORT || 3001;
