@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Weather from './components/Weather';
 import Places from './components/Places';
 import Navbar from './components/Navbar';
+import Chatbot from './components/Chatbot';
 
 function App() {
  const [destination, setDestination] = useState('');
@@ -51,9 +52,9 @@ return (
       </div>
 
       <Weather destination={destination} fetchWeatherTrigger={fetchWeatherTrigger} />
-      
     </div>
     <Places destination={destination} fetchPlacesTrigger={fetchPlacesTrigger} />
+    <Chatbot />
   </div>   
 );
 }
