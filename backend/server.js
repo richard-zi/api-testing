@@ -8,7 +8,7 @@ app.use(cors());
 app.get('/weather', async (req, res) => {
   const { destination } = req.query;
   try {
-    const response = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${destination}&appid=f70f247381c3748de5f2cc2790164a40&units=metric`);
+    const response = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${destination}&appid=XXXXX&units=metric`);
     res.json(response.data);
   } catch (error) {
     console.error('Fehler beim Abrufen der Wetterdaten:', error.response ? error.response.data : error.message); // Logik hinzugefügt, um Fehler in der Konsole zu sehen
@@ -24,7 +24,7 @@ app.get('/places', async (req, res) => {
     }, {
       headers: {
         'Content-Type': 'application/json',
-        'X-Goog-Api-Key': 'AIzaSyAXBIp8zEDPB3P8wdzlKOC0Ai7uHkVPevQ',
+        'X-Goog-Api-Key': 'XXXX',
         'X-Goog-FieldMask': 'places.displayName,places.formattedAddress', // Correct way to specify fields
       }
     });
