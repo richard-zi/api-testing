@@ -30,13 +30,19 @@ function Weather({ destination, fetchWeatherTrigger }) {
   if (!weather) return <div>Lade Wetterdaten...</div>;
 
   return (
-    <div className="weather-info">
-      <h2>Wetter in {destination}</h2>
-      {weather && (
-        <>
-          <p>Temperatur: {weather.main.temp}°C</p>
-          <p>Zustand: {weather.weather[0].description}</p>
-        </>
+    <div className="container mx-auto p-6 rounded-lg shadow-md bg-white">
+      <h2 className="text-2xl font-semibold mb-4">Wetter in {destination}</h2>
+
+      {weather ? (
+        <div className="flex items-center gap-4">
+          {/* Consider an icon for weather state */}
+          <div>
+            <p className="text-xl font-medium">{weather.main.temp}°C</p>
+            <p className="text-gray-600">{weather.weather[0].description}</p>
+          </div>
+        </div>
+      ) : (
+        <div className="text-center">Lade Wetterdaten...</div>
       )}
     </div>
   );
