@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import Weather from "./components/Weather";
 import Places from "./components/Places";
 import Navbar from "./components/Navbar";
 import Chatbot from "./components/Chatbot";
-=======
-import React, { useState, useEffect } from 'react';
-import Weather from './components/Weather';
-import Places from './components/Places';
-import Navbar from './components/Navbar';
-import Chatbot from './components/Chatbot';
->>>>>>> 2750278daada927b37511922c8c5126f852f2070
 
 function App() {
   const [destination, setDestination] = useState("");
@@ -88,18 +80,8 @@ function App() {
           fetchPlacesTrigger={fetchPlacesTrigger}
         />
       </div>
-<<<<<<< HEAD
     </div>
   );
-=======
-
-      <Weather destination={destination} fetchWeatherTrigger={fetchWeatherTrigger} />
-    </div>
-    <Places destination={destination} fetchPlacesTrigger={fetchPlacesTrigger} />
-    <Chatbot />
-  </div>   
-);
->>>>>>> 2750278daada927b37511922c8c5126f852f2070
 }
 
 export default App;
