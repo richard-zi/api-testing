@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Weather from './components/Weather';
+import Places from './components/Places';
 
 function App() {
   const [destination, setDestination] = useState('');
@@ -26,6 +27,7 @@ function App() {
           Wetter abrufen
         </button>
         <Weather destination={destination} fetchWeatherTrigger={fetchTriggerCounter} />
+        <Places destination={destination} fetchPlacesTrigger={fetchTriggerCounter} />
       </div>
     </div>
   );
