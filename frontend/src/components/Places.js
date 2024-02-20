@@ -24,7 +24,12 @@ const Places = ({ destination, fetchPlacesTrigger }) => {
       <h2>Events und Locations in {destination}</h2>
       <ul>
         {places.map((place, index) => (
-          <li key={index}>{place.displayName.text} - {place.formattedAddress}</li> 
+          <li key={index}>
+            {place.displayName.text} - {place.formattedAddress}
+            {place.photos && place.photos.length > 0 && (
+              <img src={place.photos[0]} alt={`Foto von ${place.displayName.text}`} style={{ maxWidth: '100%', height: 'auto' }} />
+            )}
+          </li>
         ))}
       </ul>
     </div>
