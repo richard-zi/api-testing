@@ -6,7 +6,53 @@ const app = express();
 // Dotenv konfigurieren
 require('dotenv').config();
 
-app.use(cors());
+// CORS-Optionen definieren
+const corsOptions = {
+  origin: 'http://localhost:3000', // Erlaubt Zugriffe vom Frontend, das auf Port 3000 läuft
+  optionsSuccessStatus: 200, // Einige ältere Browser (IE11, verschiedene SmartTVs) benötigen 200
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Erlaubte HTTP-Methoden
+  allowedHeaders: "Content-Type,Authorization", // Erlaubte Header
+  credentials: true, // Erlaubt Cookies
+};
+
+// CORS-Middleware für alle Anfragen verwenden
+app.use(cors(corsOptions));
+
+app.use(express.json());
+
+// Zusätzliche Importe
+
+
+// Neue Route für die Kommunikation mit OpenAI
+app.post('/chat-with-openai', async (req, res) => {
+  const { messages } = req.body; // Nimmt die Nachrichten vom Frontend entgegen
+
+  const systemMessage = {
+    role: "system",
+    content: "Explain all concepts like I am 10 years old"
+  };
+
+  const apiRequestBody = {
+    model: "gpt-3.5-turbo",
+    messages: [systemMessage, ...messages],
+  };
+
+  try {
+    const response = await axios.post("https://api.openai.com/v1/chat/completions", apiRequestBody, {
+      headers: {
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+    });
+
+    // Sendet die Antwort von OpenAI zurück an das Frontend
+    res.json(response.data);
+  } catch (error) {
+    console.error('Fehler bei der Kommunikation mit OpenAI:', error.response ? error.response.data : error.message);
+    res.status(500).json({ message: 'Fehler bei der Kommunikation mit OpenAI' });
+  }
+});
+
 
 app.get('/weather', async (req, res) => {
   const { destination } = req.query;
