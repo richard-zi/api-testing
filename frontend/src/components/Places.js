@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import axios from 'axios';
 
-const Places = ({ destination, fetchPlacesTrigger, addToBookmarks, bookmarks, setBookmarks }) => {
+const Places = ({ destination, fetchPlacesTrigger, addToBookmarks, bookmarks, setBookmarks, setTravel }) => {
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {

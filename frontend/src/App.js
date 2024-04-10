@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Weather from './components/Weather';
 import Places from './components/Places';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar/Navbar';
 import Chatbot from './components/Chatbot';
 
 function App() {
@@ -30,7 +30,6 @@ function App() {
 
   const addToBookmarks = (place) => {
     setBookmarks([...bookmarks, place]);
-    setTravel([...travel, place]);
   };
 
   const toggleBookmarkModal = (index) => {
@@ -43,7 +42,7 @@ function App() {
 
   return (
     <div className="App bg-gray-100 min-h-screen">
-      <Navbar bookmarks={bookmarks} toggleBookmarkModal={toggleBookmarkModal} travel={travel} />
+      <Navbar bookmarks={bookmarks} toggleBookmarkModal={toggleBookmarkModal} travel={travel} setTravel={setTravel} />
       <div className="max-w-7xl mx-auto p-4">
         <div className="flex flex-wrap">
           <div className="w-full md:w-1/2 px-4 mb-8">
@@ -92,6 +91,7 @@ function App() {
               addToBookmarks={addToBookmarks}
               bookmarks={bookmarks}
               setBookmarks={setBookmarks}
+              setTravel={setTravel}
             />
           )}
         </div>
