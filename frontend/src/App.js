@@ -1,4 +1,3 @@
-// App.jsx
 import React, { useState, useRef } from 'react';
 import Weather from './components/Weather';
 import Places from './components/Places';
@@ -77,19 +76,24 @@ function App() {
                 </svg>
               </button>
             </div>
-            <Weather destination={destination} fetchWeatherTrigger={fetchWeatherTrigger} />
+            {/* Die Weather-Komponente wird nur gerendert, wenn fetchWeatherTrigger true ist */}
+            {fetchWeatherTrigger && <Weather destination={destination} fetchWeatherTrigger={fetchWeatherTrigger} />}
           </div>
           <div className="w-full md:w-1/2 px-4">
             <Chatbot ref={chatbotRef} />
           </div>
         </div>
         <div className="w-full">
-          <Places
-            destination={destination}
-            fetchPlacesTrigger={fetchPlacesTrigger}
-            addToBookmarks={addToBookmarks}
-            bookmarks={bookmarks}
-          />
+          {/* Die Places-Komponente wird nur gerendert, wenn fetchPlacesTrigger true ist */}
+          {fetchPlacesTrigger && (
+            <Places
+              destination={destination}
+              fetchPlacesTrigger={fetchPlacesTrigger}
+              addToBookmarks={addToBookmarks}
+              bookmarks={bookmarks}
+              setBookmarks={setBookmarks}
+            />
+          )}
         </div>
       </div>
     </div>
