@@ -2,11 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 
 function Weather({ destination, fetchWeatherTrigger }) {
   const [weather, setWeather] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // Zustand für das Laden hinzugefügt
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchWeather = useCallback(() => {
     if (destination) {
-      setIsLoading(true); // Laden beginnt
+      setIsLoading(true);
       fetch(
         `http://localhost:3001/weather?destination=${encodeURIComponent(
           destination
@@ -19,12 +19,12 @@ function Weather({ destination, fetchWeatherTrigger }) {
           } else {
             setWeather(null);
           }
-          setIsLoading(false); // Laden beendet
+          setIsLoading(false);
         })
         .catch((error) => {
           console.error("Fehler beim Abrufen der Wetterdaten:", error);
           setWeather(null);
-          setIsLoading(false); // Laden beendet, auch im Fehlerfall
+          setIsLoading(false);
         });
     }
   }, [destination]);
@@ -36,23 +36,22 @@ function Weather({ destination, fetchWeatherTrigger }) {
   }, [fetchWeatherTrigger, fetchWeather]);
 
   return (
-    <div className="container mx-auto p-6 rounded-lg shadow-md bg-white">
-      <h2 className="text-2xl font-semibold mb-4">Wetter in {destination}</h2>
-
-      {/* Zustand für das Laden und die Datenanzeige */}
-      {isLoading ? (
-        <div className="text-center">Lade Wetterdaten...</div>
-      ) : weather ? (
-        <div className="flex items-center gap-4">
-          <div>
-            <p className="text-xl font-medium">{weather.main.temp}°C</p>
-            <p className="text-gray-600">{weather.weather[0].description}</p>
-          </div>
+    <div className="bg-white shadow-lg rounded-lg p-6">
+    <h2 className="text-2xl font-bold mb-4">Wetter in {destination}</h2>
+    {isLoading ? (
+      <div className="text-gray-500">Lade Wetterdaten...</div>
+    ) : weather ? (
+      <div className="flex items-center">
+        <div className="text-6xl font-bold mr-6">{Math.round(weather.main.temp)}°C</div>
+        <div>
+          <div className="text-2xl font-semibold mb-1">{weather.weather[0].main}</div>
+          <div className="text-gray-600">{weather.weather[0].description}</div>
         </div>
-      ) : (
-        <div className="text-center">Keine Wetterdaten verfügbar.</div>
-      )}
-    </div>
+      </div>
+    ) : (
+      <div className="text-gray-500">Keine Wetterdaten verfügbar.</div>
+    )}
+  </div>
   );
 }
 

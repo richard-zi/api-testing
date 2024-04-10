@@ -28,8 +28,8 @@ app.post('/chat-with-openai', async (req, res) => {
   const { messages } = req.body; // Nimmt die Nachrichten vom Frontend entgegen
 
   const systemMessage = {
-    role: "system",
-    content: "Explain all concepts like I am 10 years old"
+    role: "assistant",
+    content: "Lass uns gemeinsam auf Entdeckungsreise gehen und spannende Orte erkunden!"
   };
 
   const apiRequestBody = {
