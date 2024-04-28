@@ -1,69 +1,69 @@
-import React, { useState, useImperativeHandle, forwardRef, useEffect } from 'react';
+// Chatbot.js
+
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import axios from 'axios';
 
-const Chatbot = forwardRef(({ destination, handleFetchData }, ref) => {
+const Chatbot = forwardRef((props, ref) => {
   const [messages, setMessages] = useState([]);
-  const [lastSentMessage, setLastSentMessage] = useState(null); // Initialisierung auf null
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
-    if (destination && destination !== lastSentMessage) {
-      sendMessage(destination);
-      setLastSentMessage(destination);
+    if (props.destination) {
+      sendMessage(props.destination);
     }
-  }, [destination, lastSentMessage]);
+  }, [props.destination]); // Triggered whenever the destination changes
+
+  const sendMessage = async (content) => {
+    if (isSending || !content.trim()) return;
+
+    setIsSending(true);
+    const userMessage = { role: 'user', content: content };
+    setMessages(prevMessages => [...prevMessages, userMessage]);
+
+    try {
+      const response = await axios.post('http://localhost:3001/chat-with-openai', {
+        messages: [{ role: 'user', content }],
+      });
+      const assistantMessage = { role: 'assistant', content: response.data.choices[0].message };
+      setMessages(prevMessages => [...prevMessages, assistantMessage]);
+    } catch (error) {
+      console.error('Error communicating with OpenAI:', error);
+    }
+    setIsSending(false);
+  };
 
   useImperativeHandle(ref, () => ({
     sendMessage: (content) => {
-      if (content !== lastSentMessage) {
+      if (!isSending) {
         sendMessage(content);
-        setLastSentMessage(content);
       }
     },
-    clearMessages: () => {
-      setMessages([]);
-      setLastSentMessage(null);
-    },
+    clearMessages: () => setMessages([])
   }));
 
-  const sendMessage = async (content) => {
-    if (content !== lastSentMessage) { // Überprüfung, ob die Nachricht bereits gesendet wurde
-      setMessages((prevMessages) => [...prevMessages, { role: 'user', content }]);
-      setLastSentMessage(content); // Aktualisierung von lastSentMessage vor dem Senden
 
-      try {
-        const response = await axios.post('http://localhost:3001/chat-with-openai', {
-          messages: [...messages, { role: 'user', content }],
-        });
-
-        const assistantMessage = response.data.choices[0].message;
-        setMessages((prevMessages) => [...prevMessages, assistantMessage]);
-      } catch (error) {
-        console.error('Fehler bei der Kommunikation mit OpenAI:', error);
-      }
-    }
-  };
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-6 h-[600px] overflow-hidden flex flex-col">
       <div className="flex-grow overflow-y-auto mb-6 pr-4 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-blue-500 hover:scrollbar-thumb-blue-600">
-        {messages.map((message, index) => (
+      {messages.map((message, index) => (
           <div
             key={index}
-            className={`mb-4 ${
-              message.role === 'user' ? 'flex justify-end' : 'flex justify-start'
-            }`}
+            className={`mb-4 ${message.role === 'user' ? 'flex justify-end' : 'flex justify-start'}`}
           >
             <span
               className={`inline-block px-4 py-3 rounded-lg shadow ${
                 message.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-800'
               }`}
             >
-              {message.content.split('\n').map((line, i) => (
-                <React.Fragment key={i}>
-                  {line}
-                  <br />
-                </React.Fragment>
-              ))}
+              {typeof message.content === 'string' ? 
+                message.content.split('\n').map((line, i) => (
+                  <React.Fragment key={i}>
+                    {line}
+                    <br />
+                  </React.Fragment>
+                )) : ''
+              }
             </span>
           </div>
         ))}

@@ -1,4 +1,5 @@
-// TravelModal.jsx
+// TravelModal.js
+
 import React from 'react';
 
 const TravelModal = ({ travel, ratings, handleRatingChange, handleTravelClick }) => {

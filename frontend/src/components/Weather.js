@@ -1,3 +1,5 @@
+// Weather.js
+
 import React, { useState, useEffect, useCallback } from "react";
 
 function Weather({ destination, fetchWeatherTrigger }) {

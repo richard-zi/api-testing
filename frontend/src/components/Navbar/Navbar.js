@@ -1,4 +1,5 @@
-// Navbar.jsx
+// Navbar.js
+
 import React, { useState } from 'react';
 import BookmarkModal from './BookmarkModal';
 import TravelModal from './TravelModal';

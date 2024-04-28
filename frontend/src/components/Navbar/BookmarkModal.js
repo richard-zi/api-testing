@@ -1,4 +1,5 @@
-// BookmarkModal.jsx
+// BookmarkModal.js
+
 import React from 'react';
 
 const BookmarkModal = ({ bookmarks, toggleBookmarkModal, handleCompleteBookmark }) => {

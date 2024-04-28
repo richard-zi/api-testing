@@ -1,4 +1,5 @@
 // App.js
+
 import React, { useState, useRef } from 'react';
 import Weather from './components/Weather';
 import Places from './components/Places';
@@ -14,18 +15,20 @@ function App() {
   const [travel, setTravel] = useState([]);
   const chatbotRef = useRef(null);
 
+  // Inside App component
   const handleFetchData = () => {
     setFetchWeatherTrigger(true);
     setFetchPlacesTrigger(true);
-    if (chatbotRef.current) {
-      chatbotRef.current.clearMessages();
-      chatbotRef.current.sendMessage(destination);
-    }
   };
-
+  
   const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleFetchData();
+    if (event.key === 'Enter' && destination.trim() !== '') {
+      event.preventDefault();
+      // Check if the chatbotRef is current and has the sendMessage method
+      if (chatbotRef.current && typeof chatbotRef.current.sendMessage === 'function') {
+        chatbotRef.current.sendMessage(destination);
+        handleFetchData();
+      }
     }
   };
 
